@@ -51,15 +51,58 @@ footer{padding:28px 0;display:flex;justify-content:space-between;direction:ltr;f
  .portrait-row .photo-slot:nth-child(3),.three-portraits .photo-slot:nth-child(3){grid-column:1/-1;aspect-ratio:5/4}
  .concept-grid .concept-side{grid-template-columns:1fr 1fr}
 }
+
+/* Hybrid direction: personality of V1, restraint of V3 */
+header{background:rgba(18,16,21,.96);border-bottom:1px solid rgba(255,255,255,.09);color:#fff}
+header .contact-link{border-color:rgba(255,255,255,.72)}
+header .contact-link:hover{background:#fff;color:#15121a}
+.hero-dark{min-height:calc(100vh - 78px);background:
+radial-gradient(circle at 16% 35%,rgba(108,69,238,.13),transparent 27%),
+radial-gradient(circle at 82% 8%,rgba(255,255,255,.035),transparent 24%),#121015;color:#f8f6f1;display:flex;align-items:center;overflow:hidden}
+.hero-dark .hero-inner{width:min(calc(100% - 48px),var(--max));margin:auto;display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(40px,6vw,100px);align-items:center;padding:70px 0}
+.hero-copy-dark .eyebrow{color:#a98fff;margin-bottom:22px}
+.hero-copy-dark h1{font-size:clamp(54px,6.5vw,102px);line-height:1.01;letter-spacing:-.055em;margin:0;font-weight:300}
+.hero-copy-dark h1 strong{font-weight:800}
+.hero-copy-dark h1 .purple{color:#8d6bff;font-weight:800}
+.hero-copy-dark p{font-size:clamp(17px,1.55vw,21px);line-height:1.65;color:#c8c2cc;max-width:610px;margin:30px 0 0}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.hero-actions a{border:1px solid rgba(255,255,255,.55);border-radius:100px;padding:11px 17px;font-weight:700;font-size:14px}.hero-actions a:first-child{background:var(--purple);border-color:var(--purple);color:white}
+.hero-collage{height:min(70vh,680px);min-height:520px;position:relative;direction:ltr}
+.hero-card{position:absolute;overflow:hidden;box-shadow:0 20px 55px rgba(0,0,0,.3);background:#201b28}
+.hero-card.a{width:56%;aspect-ratio:4/5;left:2%;top:9%;z-index:2;transform:rotate(-1.5deg)}
+.hero-card.b{width:48%;aspect-ratio:4/5;right:2%;top:1%;z-index:1;transform:rotate(1.8deg)}
+.hero-card.c{width:55%;aspect-ratio:5/4;right:9%;bottom:2%;z-index:3;transform:rotate(-.7deg)}
+.hero-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .8s ease}.hero-card img.active{opacity:1}
+.signature-mark{position:absolute;left:3%;bottom:1%;width:150px;height:auto;z-index:5;opacity:.9}
+.source-chip{position:absolute;right:0;bottom:-28px;color:#8d8591;font:700 9px/1 "DM Sans";letter-spacing:.13em}
+.work-title{padding-top:95px}
+.wrestling-grid .hero-slot,.wrestling-grid .side-stack .photo-slot{aspect-ratio:5/4}
+.dark-band .wide-slot img{object-fit:cover}
+.dark-band .concept-side .photo-slot img{object-fit:cover;object-position:center}
+.brand-signature-block{margin-top:45px;background:#17141b;border-radius:2px;padding:22px 26px;width:max-content;max-width:100%}.brand-signature-block img{width:190px;height:auto}
+footer .footer-signature{background:#17141b;padding:8px 12px}.footer-signature img{width:115px;height:auto}
+@media(max-width:900px){.hero-dark .hero-inner{grid-template-columns:1fr;gap:45px}.hero-collage{height:560px;min-height:0}.hero-copy-dark{order:1}.hero-collage{order:2}}
+@media(max-width:760px){.hero-dark{min-height:auto}.hero-dark .hero-inner{width:min(calc(100% - 30px),var(--max));padding:72px 0 55px}.hero-copy-dark h1{font-size:clamp(46px,13vw,68px)}.hero-collage{height:430px}.signature-mark{width:110px}.source-chip{display:none}}
 </style>
 </head>
 <body>
 <header><a class="logo" href="#top">LISHU<i>.</i></a><nav><a href="#work">עבודות</a><a href="#about">קצת עליי</a></nav><a class="contact-link" href="https://instagram.com/lishu.il" target="_blank" rel="noreferrer">דברו איתי ↗</a></header>
 <main id="top">
-<section class="hero wrap">
-<div class="eyebrow">THE WAY I SEE IT</div>
-<h1>לא כל דבר צריך להיראות <strong>מושלם.</strong><br>הוא צריך להרגיש <span class="purple">אמיתי.</span></h1>
-<div class="hero-bottom"><p>צילום, עריכה ועיצוב שמתחילים באופי — לא בטרנד. אני ליה, אבל לישו עובד.</p><div class="scroll">SCROLL TO SEE THE WORK ↓</div></div>
+<section class="hero-dark">
+<div class="hero-inner">
+  <div class="hero-copy-dark">
+    <div class="eyebrow">THE WAY I SEE IT</div>
+    <h1>לא כל דבר צריך להיראות <strong>מושלם.</strong><br>הוא צריך להרגיש <span class="purple">אמיתי.</span></h1>
+    <p>אני ליה — אבל לישו עובד. צילום, עריכה ועיצוב שמתחילים באופי של מי שמולי, לא במה שכולם עושים עכשיו.</p>
+    <div class="hero-actions"><a href="#work">לראות עבודות ↓</a><a href="https://instagram.com/lishu.il" target="_blank" rel="noreferrer">דברו איתי ↗</a></div>
+  </div>
+  <div class="hero-collage">
+    <div class="hero-card a rotator" data-images="https://drive.google.com/thumbnail?id=18jCQy46hRNqVPDmKoteu84LFN3Q6LDgX&sz=w1600|https://drive.google.com/thumbnail?id=1m95iEW-U3LV9Bv-vemPkLvDTziiMJNJc&sz=w1600"></div>
+    <div class="hero-card b rotator" data-offset="1" data-images="https://drive.google.com/thumbnail?id=1ExoZe0FgCWdqZxQ58IvNaFvdtRw0zUPv&sz=w1600|https://drive.google.com/thumbnail?id=1Qu3q6tKZ4DbNv-I6iQ-OGNM-9D4F3nXn&sz=w1600"></div>
+    <div class="hero-card c rotator" data-offset="2" data-images="https://drive.google.com/thumbnail?id=1sitfuXToYpJS_gbGESs3UN8HixSQ9QoI&sz=w1800|https://drive.google.com/thumbnail?id=1HM1yoJs705urgGm6Z7xa8WgEJmm35EKc&sz=w1800"></div>
+    <img class="signature-mark" src="assets/lishu-signature.png" alt="Lishu.il Photography">
+    <div class="source-chip">LONDON · WWQ · RING WARRIORS · LIVE</div>
+  </div>
+</div>
 </section>
 
 <section id="work" class="work-title wrap"><div class="eyebrow">SELECTED WORK</div><h2>כמה דברים שאני <span>אוהבת.</span></h2></section>
@@ -68,16 +111,16 @@ footer{padding:28px 0;display:flex;justify-content:space-between;direction:ltr;f
 <div class="project-head"><div><div class="project-title"><span class="number">01</span><h3>IN THE RING</h3></div><p class="project-note">רגעים מהזירה — מהמהלך עצמו ועד השנייה שבין לבין.</p></div><div class="tag">WRESTLING · ISRAEL + UK</div></div>
 <div class="gallery-fixed">
 <div class="wrestling-grid">
-  <div class="photo-slot hero-slot rotator" data-images="https://drive.google.com/thumbnail?id=12pboSmCcPJB9aSqjXh1kHps7BlBaBRvS&sz=w2200|https://drive.google.com/thumbnail?id=1SSQpUl2io0AKi68RncNvhBakpy9NrT_B&sz=w2200|https://drive.google.com/thumbnail?id=1Mc2wbLU6eFQ8eZgmShLRmYqzciAp1Se7&sz=w2200|https://drive.google.com/thumbnail?id=1xWDuAiZDBlDwOVG2Y6VD02xOBLrK8FEP&sz=w2200"></div>
+  <div class="photo-slot hero-slot rotator" data-images="https://drive.google.com/thumbnail?id=1HM1yoJs705urgGm6Z7xa8WgEJmm35EKc&sz=w2200|https://drive.google.com/thumbnail?id=1sitfuXToYpJS_gbGESs3UN8HixSQ9QoI&sz=w2200|https://drive.google.com/thumbnail?id=1Wlz6pdfxvgxvLnxcOa05yKFexFuEokRw&sz=w2200|https://drive.google.com/thumbnail?id=12BBclO1faV5B7H_TxohqYrYnT6ya_K_k&sz=w2200"></div>
   <div class="side-stack">
-    <div class="photo-slot rotator" data-offset="1" data-images="https://drive.google.com/thumbnail?id=1SSQpUl2io0AKi68RncNvhBakpy9NrT_B&sz=w1600|https://drive.google.com/thumbnail?id=1xWDuAiZDBlDwOVG2Y6VD02xOBLrK8FEP&sz=w1600|https://drive.google.com/thumbnail?id=12pboSmCcPJB9aSqjXh1kHps7BlBaBRvS&sz=w1600|https://drive.google.com/thumbnail?id=1Mc2wbLU6eFQ8eZgmShLRmYqzciAp1Se7&sz=w1600"></div>
-    <div class="photo-slot rotator" data-offset="2" data-images="https://drive.google.com/thumbnail?id=1Mc2wbLU6eFQ8eZgmShLRmYqzciAp1Se7&sz=w1600|https://drive.google.com/thumbnail?id=12pboSmCcPJB9aSqjXh1kHps7BlBaBRvS&sz=w1600|https://drive.google.com/thumbnail?id=1xWDuAiZDBlDwOVG2Y6VD02xOBLrK8FEP&sz=w1600|https://drive.google.com/thumbnail?id=1SSQpUl2io0AKi68RncNvhBakpy9NrT_B&sz=w1600"></div>
+    <div class="photo-slot rotator" data-offset="1" data-images="https://drive.google.com/thumbnail?id=119w4bZLkDkpBEipARQmfTYvhJRN_WdkC&sz=w1700|https://drive.google.com/thumbnail?id=1RjTJkBbZ22dn5unx4_UViI-JS5bEpoVL&sz=w1700"></div>
+    <div class="photo-slot rotator" data-offset="2" data-images="https://drive.google.com/thumbnail?id=18pifZEk1iAclBtWhyJ4g9kzTzkzXPuJE&sz=w1700|https://drive.google.com/thumbnail?id=1UaV0b6wyeRWFdCkEXmxtEjsnHU0MFNgy&sz=w1700"></div>
   </div>
 </div>
 <div class="portrait-row">
-  <div class="photo-slot rotator" data-images="https://drive.google.com/thumbnail?id=1HyuSeEZcjc3-OuqIF24Sj1QoQK4EkJN0&sz=w1600|https://drive.google.com/thumbnail?id=1Zi0fI9XabFufEC4-JlrdGrf_oLxyUyn-&sz=w1600|https://drive.google.com/thumbnail?id=1khrxV-wxKFpdHUv4PgnmBQfyeBbn9Pgh&sz=w1600|https://drive.google.com/thumbnail?id=16zcFiM65TIvEsuYVEEvgyXcAT4mXgXd2&sz=w1600"></div>
-  <div class="photo-slot rotator" data-offset="1" data-images="https://drive.google.com/thumbnail?id=1Zi0fI9XabFufEC4-JlrdGrf_oLxyUyn-&sz=w1600|https://drive.google.com/thumbnail?id=16zcFiM65TIvEsuYVEEvgyXcAT4mXgXd2&sz=w1600|https://drive.google.com/thumbnail?id=1HyuSeEZcjc3-OuqIF24Sj1QoQK4EkJN0&sz=w1600|https://drive.google.com/thumbnail?id=1khrxV-wxKFpdHUv4PgnmBQfyeBbn9Pgh&sz=w1600"></div>
-  <div class="photo-slot rotator" data-offset="2" data-images="https://drive.google.com/thumbnail?id=1khrxV-wxKFpdHUv4PgnmBQfyeBbn9Pgh&sz=w1600|https://drive.google.com/thumbnail?id=1HyuSeEZcjc3-OuqIF24Sj1QoQK4EkJN0&sz=w1600|https://drive.google.com/thumbnail?id=1Zi0fI9XabFufEC4-JlrdGrf_oLxyUyn-&sz=w1600|https://drive.google.com/thumbnail?id=16zcFiM65TIvEsuYVEEvgyXcAT4mXgXd2&sz=w1600"></div>
+  <div class="photo-slot rotator" data-images="https://drive.google.com/thumbnail?id=18jCQy46hRNqVPDmKoteu84LFN3Q6LDgX&sz=w1500|https://drive.google.com/thumbnail?id=1m95iEW-U3LV9Bv-vemPkLvDTziiMJNJc&sz=w1500"></div>
+  <div class="photo-slot rotator" data-offset="1" data-images="https://drive.google.com/thumbnail?id=1Qu3q6tKZ4DbNv-I6iQ-OGNM-9D4F3nXn&sz=w1500|https://drive.google.com/thumbnail?id=1QYAHDB_JXOlCV9pftRlFUFCd_WqI3wHV&sz=w1500"></div>
+  <div class="photo-slot rotator" data-offset="2" data-images="https://drive.google.com/thumbnail?id=1YXuhx9L-_UQ1d98-6xaQdKJhcjxhuXmC&sz=w1500|https://drive.google.com/thumbnail?id=1UaV0b6wyeRWFdCkEXmxtEjsnHU0MFNgy&sz=w1500"></div>
 </div>
 </div>
 </div></section>
@@ -103,19 +146,19 @@ footer{padding:28px 0;display:flex;justify-content:space-between;direction:ltr;f
 <section class="project dark-band"><div class="wrap">
 <div class="project-head"><div><div class="project-title"><span class="number">04</span><h3>AFTER DARK</h3></div><p class="project-note">מקום לשחק עם אור, גוף ורעיונות בלי לנסות להיות “בטוח”.</p></div><div class="tag">CONCEPT · BODY ART</div></div>
 <div class="concept-grid gallery-fixed">
-  <div class="photo-slot wide-slot rotator" data-images="https://drive.google.com/thumbnail?id=1Kh6z89tvsoZo4Q52tWWLCGk3jheTMDGm&sz=w2200"></div>
+  <div class="photo-slot wide-slot rotator" data-images="https://drive.google.com/thumbnail?id=1SR2pScktkVI5p9Xr2JoQAcb2tpA6lRpT&sz=w2200"></div>
   <div class="concept-side">
-    <div class="photo-slot rotator" data-images="https://drive.google.com/thumbnail?id=1SZRKfn8tfuI9qsyjBiPd5wQXaVViqhUe&sz=w1600|https://drive.google.com/thumbnail?id=14oDxIWgCrV8Z1iB_8VGY0aJQtUMxXAXi&sz=w1600"></div>
-    <div class="photo-slot rotator" data-offset="1" data-images="https://drive.google.com/thumbnail?id=1SR2pScktkVI5p9Xr2JoQAcb2tpA6lRpT&sz=w1600|https://drive.google.com/thumbnail?id=1EENyVvP5lzfDryhp8n12s_693MJayGpe&sz=w1600"></div>
+    <div class="photo-slot rotator" data-images="https://drive.google.com/thumbnail?id=1Kh6z89tvsoZo4Q52tWWLCGk3jheTMDGm&sz=w1600|https://drive.google.com/thumbnail?id=1SZRKfn8tfuI9qsyjBiPd5wQXaVViqhUe&sz=w1600"></div>
+    <div class="photo-slot rotator" data-offset="1" data-images="https://drive.google.com/thumbnail?id=14oDxIWgCrV8Z1iB_8VGY0aJQtUMxXAXi&sz=w1600|https://drive.google.com/thumbnail?id=1EENyVvP5lzfDryhp8n12s_693MJayGpe&sz=w1600"></div>
   </div>
 </div>
 </div></section>
 
-<section id="about" class="about wrap"><div class="about-grid"><h2>ליה.<br><span>לישו, אם כבר הכרנו.</span></h2><div class="about-copy"><p class="lead">אני אוהבת לקחת משהו שיש לו אופי ולתת לו ויז׳ואל שמרגיש בדיוק כמוהו.</p><p>היום זה צילום, עריכת וידאו, עיצוב וחוויות דיגיטליות. הכלים משתנים; מה שמעניין אותי נשאר אותו דבר — למצוא את הדבר הספציפי שהופך משהו לשלך.</p><div class="services"><span>PHOTOGRAPHY</span><span>VIDEO EDITING</span><span>GRAPHIC DESIGN</span><span>WEB DESIGN</span></div></div></div></section>
+<section id="about" class="about wrap"><div class="about-grid"><h2>ליה.<br><span>לישו, אם כבר הכרנו.</span></h2><div class="about-copy"><p class="lead">אני אוהבת לקחת משהו שיש לו אופי ולתת לו ויז׳ואל שמרגיש בדיוק כמוהו.</p><p>היום זה צילום, עריכת וידאו, עיצוב וחוויות דיגיטליות. הכלים משתנים; מה שמעניין אותי נשאר אותו דבר — למצוא את הדבר הספציפי שהופך משהו לשלך.</p><div class="services"><span>PHOTOGRAPHY</span><span>VIDEO EDITING</span><span>GRAPHIC DESIGN</span><span>WEB DESIGN</span></div><div class="brand-signature-block"><img src="assets/lishu-signature.png" alt="Lishu.il Photography"></div></div></div></section>
 
 <section class="cta"><div class="wrap"><div class="eyebrow">LET'S MAKE SOMETHING</div><h2>יש משהו בראש?<br><span>בואו ניתן לו צורה.</span></h2><a href="https://instagram.com/lishu.il" target="_blank" rel="noreferrer">דברו איתי באינסטגרם ↗</a></div></section>
 </main>
-<footer class="wrap"><span>LISHU.</span><span>© 2026</span><span>MADE TO FEEL LIKE YOU.</span></footer>
+<footer class="wrap"><span class="footer-signature"><img src="assets/lishu-signature.png" alt="Lishu.il"></span><span>© 2026</span><span>MADE TO FEEL LIKE YOU.</span></footer>
 
 <script>
 document.querySelectorAll(".rotator").forEach((slot,slotIndex)=>{
