@@ -29,27 +29,24 @@ footer{background:#15121a;color:#fff;padding:34px 0}.foot{width:min(calc(100% - 
  .project-head.simple .num{margin:0}
 }
 
-/* PROJECT GALLERIES: spacious editorial clusters, crop-free */
+/* PROJECT GALLERIES: justified editorial panels, full photos, no crop */
 .gallery{direction:ltr;position:relative}
 .gallery-stage,.gallery-thumbs{display:none!important}
 .gallery-shell{position:relative}
-.gallery-rail{display:flex;gap:clamp(34px,5vw,86px);overflow-x:auto;overflow-y:hidden;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory;scrollbar-width:none;cursor:grab;touch-action:pan-x;padding:0 9vw 0 0}
+.gallery-rail{display:flex;gap:clamp(28px,4vw,64px);overflow-x:auto;overflow-y:hidden;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory;scrollbar-width:none;cursor:grab;touch-action:pan-x;padding:0 8vw 0 0}
 .gallery-rail::-webkit-scrollbar{display:none}.gallery-rail.dragging{cursor:grabbing;scroll-snap-type:none}
-.gallery-panel{flex:0 0 auto;height:min(62vh,660px);min-height:500px;display:flex;align-items:stretch;gap:clamp(12px,1.3vw,22px);scroll-snap-align:start}
-.gallery-column{height:100%;display:flex;flex-direction:column;gap:clamp(12px,1.3vw,22px);flex:0 0 auto}
-.gallery-column.stack{justify-content:center}
-.gallery-column.stack .gallery-card{height:calc(50% - 7px)}
-.gallery-column.feature .gallery-card{height:100%}
-.gallery-card{width:auto;flex:0 0 auto;margin:0;position:relative;overflow:hidden;background:transparent;cursor:zoom-in}
-.gallery-card img{height:100%;width:auto;max-width:none;display:block;object-fit:contain;transition:transform .45s ease}
-.gallery-card:hover img{transform:scale(1.012)}
+.gallery-panel{flex:0 0 min(86vw,1320px);height:min(60vh,640px);min-height:470px;display:flex;flex-direction:column;gap:10px;scroll-snap-align:start}
+.gallery-row{display:flex;gap:10px;width:100%;min-height:0;overflow:hidden}
+.gallery-row:first-child{flex:1.08}.gallery-row:last-child{flex:.92}
+.gallery-card{height:100%;min-width:0;flex:1 1 0;margin:0;position:relative;overflow:hidden;background:transparent;cursor:zoom-in}
+.gallery-card img{width:100%;height:100%;display:block;object-fit:contain;transition:transform .45s ease}
+.gallery-card:hover img{transform:scale(1.01)}
 .gallery-card.is-broken{display:none}
-.gallery-panel.layout-b .feature.first{order:3}.gallery-panel.layout-b .stack{order:1}.gallery-panel.layout-b .feature.last{order:2}
 .gallery-nav{position:absolute;inset:50% 12px auto 12px;transform:translateY(-50%);display:flex;justify-content:space-between;pointer-events:none;z-index:3}
 .gallery-controls{display:contents}
 .gallery-control{pointer-events:auto;width:46px;height:46px;border:1px solid rgba(255,255,255,.78);border-radius:50%;background:rgba(20,17,24,.62);color:#fff;backdrop-filter:blur(8px);display:grid;place-items:center;font-size:26px;cursor:pointer;opacity:.9}
 .gallery-control:hover{opacity:1}
-.gallery-progress{height:2px;background:rgba(100,90,110,.12);margin-top:16px;overflow:hidden}
+.gallery-progress{height:2px;background:rgba(100,90,110,.12);margin-top:14px;overflow:hidden}
 .gallery-progress span{display:block;height:100%;width:4%;background:currentColor;transition:width .15s ease}
 .lightbox{position:fixed;inset:0;z-index:200;background:rgba(12,10,15,.94);display:none;align-items:center;justify-content:center;padding:28px}
 .lightbox.open{display:flex}.lightbox img{width:auto;height:auto;max-width:min(92vw,1500px);max-height:88vh;object-fit:contain}
@@ -58,13 +55,12 @@ footer{background:#15121a;color:#fff;padding:34px 0}.foot{width:min(calc(100% - 
 .lightbox-nav{top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;font-size:28px}
 .lightbox-prev{left:20px}.lightbox-next{right:20px}.lightbox-count{position:absolute;bottom:18px;color:#fff;font:700 10px/1 "DM Sans";letter-spacing:.12em}
 @media(max-width:760px){
- .project{padding-top:38px;padding-bottom:72px}.project-head{margin-bottom:20px}
- .gallery-rail{gap:30px;padding-right:12vw}
- .gallery-panel{height:54vh;min-height:410px;gap:9px}
- .gallery-column{gap:9px}.gallery-column.stack .gallery-card{height:calc(50% - 4.5px)}
- .gallery-panel .feature.last{display:none}
+ .project{padding-top:38px;padding-bottom:70px}.project-head{margin-bottom:20px}
+ .gallery-rail{gap:22px;padding-right:10vw}
+ .gallery-panel{flex-basis:90vw;height:52vh;min-height:390px;gap:6px}
+ .gallery-row{gap:6px}.gallery-row:first-child{flex:1}.gallery-row:last-child{flex:1}
  .gallery-control{width:38px;height:38px;font-size:22px}.gallery-nav{left:6px;right:6px}
- .gallery-progress{margin-top:12px}
+ .gallery-progress{margin-top:10px}
  .lightbox{padding:14px}.lightbox-nav{width:40px;height:40px}.lightbox-prev{left:8px}.lightbox-next{right:8px}.lightbox-close{top:10px;right:10px}
 }
 </style></head><body>
@@ -129,17 +125,26 @@ function spreadOrder(items,groups=6){
  for(let row=0;row<max;row++) for(let col=0;col<chunks.length;col++) if(chunks[col][row]) out.push(chunks[col][row]);
  return out;
 }
-function makeCard(id,index,ids){
+function makeCard(id,index,ids,onReady){
  const card=document.createElement("figure");card.className="gallery-card";
- const im=document.createElement("img");im.loading=index<10?"eager":"lazy";im.src=drive(id,"w1600");im.alt="";
+ const im=document.createElement("img");im.loading=index<12?"eager":"lazy";im.src=drive(id,"w1600");im.alt="";
  im.dataset.retry="0";
+ im.onload=()=>{card.dataset.ratio=(im.naturalWidth/im.naturalHeight)||1;onReady&&onReady()};
  im.onerror=()=>{
    const retry=Number(im.dataset.retry||0);
    if(retry===0){im.dataset.retry="1";setTimeout(()=>{im.src=drive(id,"w1000")},250+((index%6)*120));return}
    if(retry===1){im.dataset.retry="2";setTimeout(()=>{im.src=drive(id,"w800")},900+((index%5)*180));return}
-   card.classList.add("is-broken");im.removeAttribute("src");
+   card.classList.add("is-broken");im.removeAttribute("src");onReady&&onReady();
  };
  card.appendChild(im);card.onclick=()=>openLightbox(ids,index);return card;
+}
+function justifyRow(row){
+ const cards=[...row.children].filter(x=>!x.classList.contains("is-broken"));
+ if(!cards.length)return;
+ cards.forEach(card=>{
+   const ratio=Number(card.dataset.ratio)||1;
+   card.style.flex=ratio+" 1 0px";
+ });
 }
 function buildGallery(g){
  let ids=g.dataset.ids.split(",").map(x=>x.trim()).filter(Boolean);
@@ -148,18 +153,15 @@ function buildGallery(g){
 
  const shell=document.createElement("div");shell.className="gallery-shell";
  const rail=document.createElement("div");rail.className="gallery-rail";
-
- for(let p=0;p<ids.length;p+=4){
-   const batch=ids.slice(p,p+4);
-   const panel=document.createElement("div");panel.className="gallery-panel "+(((p/4)%2)?"layout-b":"layout-a");
-   const first=document.createElement("div");first.className="gallery-column feature first";
-   const stack=document.createElement("div");stack.className="gallery-column stack";
-   const last=document.createElement("div");last.className="gallery-column feature last";
-   if(batch[0])first.appendChild(makeCard(batch[0],p,ids));
-   if(batch[1])stack.appendChild(makeCard(batch[1],p+1,ids));
-   if(batch[2])stack.appendChild(makeCard(batch[2],p+2,ids));
-   if(batch[3])last.appendChild(makeCard(batch[3],p+3,ids));
-   panel.append(first,stack,last);rail.appendChild(panel);
+ for(let p=0;p<ids.length;p+=6){
+   const panel=document.createElement("div");panel.className="gallery-panel";
+   const top=document.createElement("div");top.className="gallery-row";
+   const bottom=document.createElement("div");bottom.className="gallery-row";
+   ids.slice(p,p+6).forEach((id,j)=>{
+     const row=j<3?top:bottom;
+     row.appendChild(makeCard(id,p+j,ids,()=>justifyRow(row)));
+   });
+   panel.append(top,bottom);rail.appendChild(panel);
  }
  const nav=document.createElement("div");nav.className="gallery-nav";
  nav.innerHTML='<div class="gallery-controls"><button class="gallery-control prev" aria-label="Previous gallery view">‹</button><button class="gallery-control next" aria-label="Next gallery view">›</button></div>';
@@ -168,8 +170,8 @@ function buildGallery(g){
  const bar=progress.firstElementChild;
  const update=()=>{const max=rail.scrollWidth-rail.clientWidth;bar.style.width=(max<=0?100:Math.max(4,Math.min(100,4+(rail.scrollLeft/max)*96)))+"%"};
  rail.addEventListener("scroll",update,{passive:true});requestAnimationFrame(update);
- nav.querySelector(".next").onclick=()=>rail.scrollBy({left:rail.clientWidth*.84,behavior:"smooth"});
- nav.querySelector(".prev").onclick=()=>rail.scrollBy({left:-rail.clientWidth*.84,behavior:"smooth"});
+ nav.querySelector(".next").onclick=()=>rail.scrollBy({left:rail.clientWidth*.88,behavior:"smooth"});
+ nav.querySelector(".prev").onclick=()=>rail.scrollBy({left:-rail.clientWidth*.88,behavior:"smooth"});
  rail.addEventListener("wheel",e=>{
    if(Math.abs(e.deltaY)<=Math.abs(e.deltaX)||rail.scrollWidth<=rail.clientWidth)return;
    const max=rail.scrollWidth-rail.clientWidth,canMove=(e.deltaY>0&&rail.scrollLeft<max-2)||(e.deltaY<0&&rail.scrollLeft>2);
