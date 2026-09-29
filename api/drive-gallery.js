@@ -23,9 +23,17 @@ async function listFolder(folderId){
   }
   return files.filter((f,i,a)=>a.findIndex(x=>x.id===f.id)===i);
 }
+function hashId(s){
+  let h=2166136261;
+  for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}
+  return h>>>0;
+}
+function mixed(files){
+  return [...files].sort((a,b)=>hashId(a.id)-hashId(b.id));
+}
 async function loadSource(source){
   if(source.folder){
-    const files=await listFolder(source.folder);
+    const files=mixed(await listFolder(source.folder));
     return {selects:[],gallery:files,ids:files.map(x=>x.id)};
   }
   const [selects,gallery]=await Promise.all([listFolder(source.selects),listFolder(source.gallery)]);
