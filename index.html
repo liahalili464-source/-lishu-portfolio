@@ -29,32 +29,22 @@ footer{background:#15121a;color:#fff;padding:34px 0}.foot{width:min(calc(100% - 
  .project-head.simple .num{margin:0}
 }
 
-/* PROJECT GALLERIES: horizontal editorial collage panels */
+/* PROJECT GALLERIES: crop-free editorial strips */
 .gallery{direction:ltr;position:relative}
 .gallery-stage,.gallery-thumbs{display:none!important}
 .gallery-shell{position:relative}
-.gallery-rail{display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory;scrollbar-width:none;cursor:grab;touch-action:pan-x;padding:0 6vw 0 0}
-.gallery-rail::-webkit-scrollbar{display:none}
-.gallery-rail.dragging{cursor:grabbing;scroll-snap-type:none}
-.gallery-panel{flex:0 0 min(84vw,1180px);height:min(58vh,610px);min-height:430px;display:grid;gap:7px;scroll-snap-align:start}
-.gallery-panel.layout-a{grid-template-columns:1.15fr .85fr 1fr;grid-template-rows:1fr 1fr}
-.gallery-panel.layout-a .gallery-card:nth-child(1){grid-row:1/3}
-.gallery-panel.layout-a .gallery-card:nth-child(2){grid-column:2;grid-row:1}
-.gallery-panel.layout-a .gallery-card:nth-child(3){grid-column:2;grid-row:2}
-.gallery-panel.layout-a .gallery-card:nth-child(4){grid-column:3;grid-row:1/3}
-.gallery-panel.layout-b{grid-template-columns:.9fr 1.2fr .9fr;grid-template-rows:1fr 1fr}
-.gallery-panel.layout-b .gallery-card:nth-child(1){grid-column:1;grid-row:1}
-.gallery-panel.layout-b .gallery-card:nth-child(2){grid-column:1;grid-row:2}
-.gallery-panel.layout-b .gallery-card:nth-child(3){grid-column:2;grid-row:1/3}
-.gallery-panel.layout-b .gallery-card:nth-child(4){grid-column:3;grid-row:1/3}
-.gallery-card{margin:0;position:relative;overflow:hidden;background:rgba(120,110,130,.08);cursor:zoom-in;min-width:0;min-height:0}
-.gallery-card img{width:100%;height:100%;display:block;object-fit:contain;object-position:center;transition:transform .45s ease,opacity .25s ease}
-.project:not(.purple):not(.dark) .gallery-card{background:#f4f1f8}
-.project.purple .gallery-card{background:#6542dc}
-.project.dark .gallery-card{background:#0d0b10}
-.gallery-card:hover img{transform:scale(1.018)}
+.gallery-rail{display:flex;gap:22px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory;scrollbar-width:none;cursor:grab;touch-action:pan-x;padding:0 6vw 0 0}
+.gallery-rail::-webkit-scrollbar{display:none}.gallery-rail.dragging{cursor:grabbing;scroll-snap-type:none}
+.gallery-panel{flex:0 0 auto;width:max-content;height:min(58vh,610px);min-height:430px;display:flex;flex-direction:column;gap:7px;scroll-snap-align:start}
+.gallery-row{display:flex;gap:7px;width:max-content;min-width:0}
+.gallery-panel.layout-a .gallery-row:first-child{height:34vh;max-height:355px}
+.gallery-panel.layout-a .gallery-row:last-child{height:23vh;max-height:248px}
+.gallery-panel.layout-b .gallery-row:first-child{height:23vh;max-height:248px}
+.gallery-panel.layout-b .gallery-row:last-child{height:34vh;max-height:355px}
+.gallery-card{height:100%;width:auto;flex:0 0 auto;margin:0;position:relative;overflow:hidden;background:transparent;cursor:zoom-in}
+.gallery-card img{height:100%;width:auto;max-width:none;display:block;object-fit:contain;transition:transform .45s ease}
+.gallery-card:hover img{transform:scale(1.012)}
 .gallery-card.is-broken{display:none}
-.gallery-panel:has(.gallery-card.is-broken){grid-auto-flow:dense}
 .gallery-nav{position:absolute;inset:50% 10px auto 10px;transform:translateY(-50%);display:flex;justify-content:space-between;pointer-events:none;z-index:3}
 .gallery-controls{display:contents}
 .gallery-control{pointer-events:auto;width:44px;height:44px;border:1px solid rgba(255,255,255,.75);border-radius:50%;background:rgba(20,17,24,.62);color:#fff;backdrop-filter:blur(8px);display:grid;place-items:center;font-size:25px;cursor:pointer;opacity:.9}
@@ -69,13 +59,11 @@ footer{background:#15121a;color:#fff;padding:34px 0}.foot{width:min(calc(100% - 
 .lightbox-prev{left:20px}.lightbox-next{right:20px}.lightbox-count{position:absolute;bottom:18px;color:#fff;font:700 10px/1 "DM Sans";letter-spacing:.12em}
 @media(max-width:760px){
  .project{padding-top:38px;padding-bottom:66px}.project-head{margin-bottom:18px}
- .gallery-rail{gap:8px;padding-right:8vw}
- .gallery-panel{flex-basis:88vw;height:52vh;min-height:390px;gap:5px}
- .gallery-panel.layout-a,.gallery-panel.layout-b{grid-template-columns:1fr 1fr;grid-template-rows:1.15fr .85fr}
- .gallery-panel.layout-a .gallery-card:nth-child(1),.gallery-panel.layout-b .gallery-card:nth-child(3){grid-column:1;grid-row:1/3}
- .gallery-panel.layout-a .gallery-card:nth-child(2),.gallery-panel.layout-b .gallery-card:nth-child(1){grid-column:2;grid-row:1}
- .gallery-panel.layout-a .gallery-card:nth-child(3),.gallery-panel.layout-b .gallery-card:nth-child(2){grid-column:2;grid-row:2}
- .gallery-panel.layout-a .gallery-card:nth-child(4),.gallery-panel.layout-b .gallery-card:nth-child(4){display:none}
+ .gallery-rail{gap:12px;padding-right:8vw}
+ .gallery-panel{height:50vh;min-height:370px;gap:5px}
+ .gallery-panel.layout-a .gallery-row:first-child,.gallery-panel.layout-b .gallery-row:last-child{height:29vh;max-height:none}
+ .gallery-panel.layout-a .gallery-row:last-child,.gallery-panel.layout-b .gallery-row:first-child{height:20vh;max-height:none}
+ .gallery-row{gap:5px}
  .gallery-control{width:36px;height:36px;font-size:21px}.gallery-nav{left:5px;right:5px}
  .lightbox{padding:14px}.lightbox-nav{width:40px;height:40px}.lightbox-prev{left:8px}.lightbox-next{right:8px}.lightbox-close{top:10px;right:10px}
 }
@@ -134,12 +122,24 @@ async function syncDrive(){
 }
 
 function galleryHash(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
-function spreadOrder(items,groups=5){
+function spreadOrder(items,groups=6){
  const chunks=Array.from({length:groups},()=>[]);
  items.forEach((item,i)=>chunks[Math.min(groups-1,Math.floor(i*groups/items.length))].push(item));
  const out=[],max=Math.max(...chunks.map(x=>x.length));
  for(let row=0;row<max;row++) for(let col=0;col<chunks.length;col++) if(chunks[col][row]) out.push(chunks[col][row]);
  return out;
+}
+function makeCard(id,index,ids,g){
+ const card=document.createElement("figure");card.className="gallery-card";
+ const im=document.createElement("img");im.loading=index<12?"eager":"lazy";im.src=drive(id,"w1600");im.alt="";
+ im.dataset.retry="0";
+ im.onerror=()=>{
+   const retry=Number(im.dataset.retry||0);
+   if(retry===0){im.dataset.retry="1";setTimeout(()=>{im.src=drive(id,"w1000")},250+((index%6)*120));return}
+   if(retry===1){im.dataset.retry="2";setTimeout(()=>{im.src=drive(id,"w800")},900+((index%5)*180));return}
+   card.classList.add("is-broken");im.removeAttribute("src");
+ };
+ card.appendChild(im);card.onclick=()=>openLightbox(ids,index);return card;
 }
 function buildGallery(g){
  let ids=g.dataset.ids.split(",").map(x=>x.trim()).filter(Boolean);
@@ -149,21 +149,15 @@ function buildGallery(g){
  const shell=document.createElement("div");shell.className="gallery-shell";
  const rail=document.createElement("div");rail.className="gallery-rail";
 
- for(let p=0;p<ids.length;p+=4){
-   const panel=document.createElement("div");panel.className="gallery-panel "+(((p/4)%2)?"layout-b":"layout-a");
-   ids.slice(p,p+4).forEach((id,j)=>{
-     const index=p+j,card=document.createElement("figure");card.className="gallery-card";
-     const im=document.createElement("img");im.loading=index<8?"eager":"lazy";im.src=drive(id,"w1600");im.alt="";
-     im.dataset.retry="0";
-     im.onerror=()=>{
-       const retry=Number(im.dataset.retry||0);
-       if(retry===0){im.dataset.retry="1";setTimeout(()=>{im.src=drive(id,"w1000")},250+((index%6)*120));return}
-       if(retry===1){im.dataset.retry="2";setTimeout(()=>{im.src=drive(id,"w800")},900+((index%5)*180));return}
-       card.classList.add("is-broken");im.removeAttribute("src");
-     };
-     card.appendChild(im);card.onclick=()=>openLightbox(ids,index);panel.appendChild(card);
+ for(let p=0;p<ids.length;p+=6){
+   const panel=document.createElement("div");panel.className="gallery-panel "+(((p/6)%2)?"layout-b":"layout-a");
+   const top=document.createElement("div");top.className="gallery-row";
+   const bottom=document.createElement("div");bottom.className="gallery-row";
+   ids.slice(p,p+6).forEach((id,j)=>{
+     const index=p+j;
+     (j<3?top:bottom).appendChild(makeCard(id,index,ids,g));
    });
-   rail.appendChild(panel);
+   panel.append(top,bottom);rail.appendChild(panel);
  }
  const nav=document.createElement("div");nav.className="gallery-nav";
  nav.innerHTML='<div class="gallery-controls"><button class="gallery-control prev" aria-label="Previous gallery view">‹</button><button class="gallery-control next" aria-label="Next gallery view">›</button></div>';
