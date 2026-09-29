@@ -29,26 +29,27 @@ footer{background:#15121a;color:#fff;padding:34px 0}.foot{width:min(calc(100% - 
  .project-head.simple .num{margin:0}
 }
 
-/* PROJECT GALLERIES: compact two-row horizontal photo wall */
+/* PROJECT GALLERIES: two independent horizontal rows, natural image ratios */
 .gallery{direction:ltr;position:relative}
 .gallery-stage,.gallery-thumbs{display:none!important}
 .gallery-shell{position:relative}
 .gallery-rail{
- display:grid;grid-template-rows:repeat(2,minmax(0,27vh));grid-auto-flow:column;grid-auto-columns:max-content;
- gap:7px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-inline:contain;scrollbar-width:none;
- padding:0 6vw 0 0;cursor:grab;touch-action:pan-x;max-height:calc(54vh + 7px)
+ overflow-x:auto;overflow-y:hidden;overscroll-behavior-inline:contain;scrollbar-width:none;
+ cursor:grab;touch-action:pan-x;padding:0 5vw 0 0
 }
 .gallery-rail::-webkit-scrollbar{display:none}
 .gallery-rail.dragging{cursor:grabbing}
-.gallery-card{height:27vh;min-height:180px;max-height:310px;margin:0;position:relative;overflow:hidden;background:transparent;cursor:zoom-in;display:block}
-.gallery-card img{height:100%;width:auto;max-width:none;object-fit:contain;display:block;transition:transform .4s ease}
+.gallery-track{width:max-content;display:flex;flex-direction:column;gap:7px}
+.gallery-row{display:flex;gap:7px;width:max-content;height:25vh;min-height:190px;max-height:290px}
+.gallery-card{height:100%;flex:0 0 auto;margin:0;position:relative;overflow:hidden;background:transparent;cursor:zoom-in}
+.gallery-card img{height:100%;width:auto;max-width:none;display:block;object-fit:contain;transition:transform .4s ease}
 .gallery-card:hover img{transform:scale(1.012)}
 .gallery-nav{position:absolute;inset:50% 10px auto 10px;transform:translateY(-50%);display:flex;justify-content:space-between;pointer-events:none;z-index:3}
 .gallery-controls{display:contents}
-.gallery-control{pointer-events:auto;width:42px;height:42px;border:1px solid rgba(255,255,255,.65);border-radius:50%;background:rgba(20,17,24,.62);color:#fff;backdrop-filter:blur(8px);display:grid;place-items:center;font-size:24px;cursor:pointer;opacity:.82}
+.gallery-control{pointer-events:auto;width:42px;height:42px;border:1px solid rgba(255,255,255,.72);border-radius:50%;background:rgba(20,17,24,.66);color:#fff;backdrop-filter:blur(8px);display:grid;place-items:center;font-size:24px;cursor:pointer;opacity:.86}
 .gallery-control:hover{opacity:1}
-.gallery-progress{height:2px;background:rgba(100,90,110,.18);margin-top:10px;overflow:hidden}
-.gallery-progress span{display:block;height:100%;width:0;background:currentColor;transition:width .15s ease}
+.gallery-progress{height:2px;background:rgba(100,90,110,.15);margin-top:10px;overflow:hidden}
+.gallery-progress span{display:block;height:100%;width:4%;background:currentColor;transition:width .15s ease}
 .lightbox{position:fixed;inset:0;z-index:200;background:rgba(12,10,15,.94);display:none;align-items:center;justify-content:center;padding:28px}
 .lightbox.open{display:flex}.lightbox img{width:auto;height:auto;max-width:min(92vw,1500px);max-height:88vh;object-fit:contain}
 .lightbox-close,.lightbox-nav{position:absolute;border:0;background:rgba(255,255,255,.12);color:#fff;backdrop-filter:blur(10px);cursor:pointer;display:grid;place-items:center}
@@ -56,8 +57,11 @@ footer{background:#15121a;color:#fff;padding:34px 0}.foot{width:min(calc(100% - 
 .lightbox-nav{top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;font-size:28px}
 .lightbox-prev{left:20px}.lightbox-next{right:20px}.lightbox-count{position:absolute;bottom:18px;color:#fff;font:700 10px/1 "DM Sans";letter-spacing:.12em}
 @media(max-width:760px){
- .gallery-rail{grid-template-rows:repeat(2,minmax(0,25vh));gap:5px;padding-right:8vw;max-height:calc(50vh + 5px)}
- .gallery-card{height:25vh;min-height:145px;max-height:240px}
+ .project{padding-top:38px;padding-bottom:68px}
+ .project-head{margin-bottom:18px}
+ .gallery-rail{padding-right:8vw}
+ .gallery-track{gap:5px}
+ .gallery-row{height:22vh;min-height:145px;max-height:220px;gap:5px}
  .gallery-control{width:36px;height:36px;font-size:21px}
  .gallery-nav{left:5px;right:5px}
  .lightbox{padding:14px}.lightbox-nav{width:40px;height:40px}.lightbox-prev{left:8px}.lightbox-next{right:8px}.lightbox-close{top:10px;right:10px}
@@ -120,31 +124,44 @@ function galleryHash(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCo
 function buildGallery(g){
  let ids=g.dataset.ids.split(",").map(x=>x.trim()).filter(Boolean);
  if(["live","portraits","creative"].includes(g.dataset.key)) ids=[...ids].sort((a,b)=>galleryHash(a)-galleryHash(b));
+
  const shell=document.createElement("div");shell.className="gallery-shell";
  const rail=document.createElement("div");rail.className="gallery-rail";
+ const track=document.createElement("div");track.className="gallery-track";
+ const top=document.createElement("div");top.className="gallery-row";
+ const bottom=document.createElement("div");bottom.className="gallery-row";
+
  ids.forEach((id,index)=>{
    const card=document.createElement("figure");card.className="gallery-card";
-   const im=document.createElement("img");im.loading=index<8?"eager":"lazy";im.src=drive(id,"w1400");im.alt=(g.dataset.name||"LISHU")+" by LISHU";
-   card.appendChild(im);card.onclick=()=>openLightbox(ids,index);rail.appendChild(card);
+   const im=document.createElement("img");im.loading=index<10?"eager":"lazy";im.src=drive(id,"w1400");im.alt=(g.dataset.name||"LISHU")+" by LISHU";
+   card.appendChild(im);card.onclick=()=>openLightbox(ids,index);
+   (index%2===0?top:bottom).appendChild(card);
  });
+ track.append(top,bottom);rail.appendChild(track);
+
  const nav=document.createElement("div");nav.className="gallery-nav";
  nav.innerHTML='<div class="gallery-controls"><button class="gallery-control prev" aria-label="Previous gallery view">‹</button><button class="gallery-control next" aria-label="Next gallery view">›</button></div>';
  const progress=document.createElement("div");progress.className="gallery-progress";progress.innerHTML="<span></span>";
  shell.append(rail,nav,progress);g.appendChild(shell);
+
  const bar=progress.firstElementChild;
- const update=()=>{const max=rail.scrollWidth-rail.clientWidth;bar.style.width=(max<=0?100:Math.max(4,Math.min(100,(rail.scrollLeft/max)*100)))+"%"};
+ const update=()=>{const max=rail.scrollWidth-rail.clientWidth;bar.style.width=(max<=0?100:Math.max(4,Math.min(100,4+(rail.scrollLeft/max)*96)))+"%"};
  rail.addEventListener("scroll",update,{passive:true});requestAnimationFrame(update);
  nav.querySelector(".next").onclick=()=>rail.scrollBy({left:rail.clientWidth*.82,behavior:"smooth"});
  nav.querySelector(".prev").onclick=()=>rail.scrollBy({left:-rail.clientWidth*.82,behavior:"smooth"});
+
  rail.addEventListener("wheel",e=>{
-   if(Math.abs(e.deltaY)>Math.abs(e.deltaX) && rail.scrollWidth>rail.clientWidth){
-     e.preventDefault();rail.scrollLeft+=e.deltaY;
-   }
+   if(Math.abs(e.deltaY)<=Math.abs(e.deltaX)||rail.scrollWidth<=rail.clientWidth)return;
+   const max=rail.scrollWidth-rail.clientWidth;
+   const canMove=(e.deltaY>0&&rail.scrollLeft<max-2)||(e.deltaY<0&&rail.scrollLeft>2);
+   if(canMove){e.preventDefault();rail.scrollLeft+=e.deltaY}
  },{passive:false});
- let down=false,startX=0,startScroll=0,moved=false;
- rail.addEventListener("pointerdown",e=>{down=true;moved=false;startX=e.clientX;startScroll=rail.scrollLeft;rail.classList.add("dragging");rail.setPointerCapture(e.pointerId)});
- rail.addEventListener("pointermove",e=>{if(down){const d=e.clientX-startX;if(Math.abs(d)>4)moved=true;rail.scrollLeft=startScroll-d}});
- const stop=()=>{down=false;rail.classList.remove("dragging")};rail.addEventListener("pointerup",stop);rail.addEventListener("pointercancel",stop);
+
+ let down=false,startX=0,startScroll=0;
+ rail.addEventListener("pointerdown",e=>{down=true;startX=e.clientX;startScroll=rail.scrollLeft;rail.classList.add("dragging");rail.setPointerCapture(e.pointerId)});
+ rail.addEventListener("pointermove",e=>{if(down)rail.scrollLeft=startScroll-(e.clientX-startX)});
+ const stop=()=>{down=false;rail.classList.remove("dragging")};
+ rail.addEventListener("pointerup",stop);rail.addEventListener("pointercancel",stop);
 }
 
 (async()=>{await syncDrive();document.querySelectorAll("[data-gallery]").forEach(buildGallery)})();
