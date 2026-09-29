@@ -31,9 +31,10 @@ function hashId(s){
 function mixed(files){
   return [...files].sort((a,b)=>hashId(a.id)-hashId(b.id));
 }
-async function loadSource(source){
+async function loadSource(source,key){
   if(source.folder){
-    const files=mixed(await listFolder(source.folder));
+    const raw=await listFolder(source.folder);
+    const files=key==="portraits"?raw:mixed(raw);
     return {selects:[],gallery:files,ids:files.map(x=>x.id)};
   }
   const [selects,gallery]=await Promise.all([listFolder(source.selects),listFolder(source.gallery)]);
@@ -41,7 +42,7 @@ async function loadSource(source){
 }
 export default async function handler(req,res){
   try{
-    const entries=await Promise.all(Object.entries(SOURCES).map(async([key,source])=>[key,await loadSource(source)]));
+    const entries=await Promise.all(Object.entries(SOURCES).map(async([key,source])=>[key,await loadSource(source,key)]));
     res.setHeader("Cache-Control","s-maxage=300, stale-while-revalidate=3600");
     res.status(200).json({updatedAt:new Date().toISOString(),categories:Object.fromEntries(entries)});
   }catch(error){
