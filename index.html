@@ -143,7 +143,13 @@ function buildGallery(g){
    ids.slice(p,p+4).forEach((id,j)=>{
      const index=p+j,card=document.createElement("figure");card.className="gallery-card";
      const im=document.createElement("img");im.loading=index<8?"eager":"lazy";im.src=drive(id,"w1600");im.alt="";
-     im.onerror=()=>{card.classList.add("is-broken"); im.removeAttribute("src");};
+     im.dataset.retry="0";
+     im.onerror=()=>{
+       const retry=Number(im.dataset.retry||0);
+       if(retry===0){im.dataset.retry="1";setTimeout(()=>{im.src=drive(id,"w1000")},250+((index%6)*120));return}
+       if(retry===1){im.dataset.retry="2";setTimeout(()=>{im.src=drive(id,"w800")},900+((index%5)*180));return}
+       card.classList.add("is-broken");im.removeAttribute("src");
+     };
      card.appendChild(im);card.onclick=()=>openLightbox(ids,index);panel.appendChild(card);
    });
    rail.appendChild(panel);
