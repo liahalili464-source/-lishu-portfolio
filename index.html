@@ -48,7 +48,10 @@ footer{background:#15121a;color:#fff;padding:34px 0}.foot{width:min(calc(100% - 
 .gallery-panel.layout-b .gallery-card:nth-child(3){grid-column:2;grid-row:1/3}
 .gallery-panel.layout-b .gallery-card:nth-child(4){grid-column:3;grid-row:1/3}
 .gallery-card{margin:0;position:relative;overflow:hidden;background:rgba(120,110,130,.08);cursor:zoom-in;min-width:0;min-height:0}
-.gallery-card img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .45s ease,opacity .25s ease}
+.gallery-card img{width:100%;height:100%;display:block;object-fit:contain;object-position:center;transition:transform .45s ease,opacity .25s ease}
+.project:not(.purple):not(.dark) .gallery-card{background:#f4f1f8}
+.project.purple .gallery-card{background:#6542dc}
+.project.dark .gallery-card{background:#0d0b10}
 .gallery-card:hover img{transform:scale(1.018)}
 .gallery-card.is-broken{display:none}
 .gallery-panel:has(.gallery-card.is-broken){grid-auto-flow:dense}
@@ -131,9 +134,17 @@ async function syncDrive(){
 }
 
 function galleryHash(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+function spreadOrder(items,groups=5){
+ const chunks=Array.from({length:groups},()=>[]);
+ items.forEach((item,i)=>chunks[Math.min(groups-1,Math.floor(i*groups/items.length))].push(item));
+ const out=[],max=Math.max(...chunks.map(x=>x.length));
+ for(let row=0;row<max;row++) for(let col=0;col<chunks.length;col++) if(chunks[col][row]) out.push(chunks[col][row]);
+ return out;
+}
 function buildGallery(g){
  let ids=g.dataset.ids.split(",").map(x=>x.trim()).filter(Boolean);
- if(["live","portraits","creative"].includes(g.dataset.key)) ids=[...ids].sort((a,b)=>galleryHash(a)-galleryHash(b));
+ if(g.dataset.key==="portraits") ids=spreadOrder(ids,6);
+ else if(["live","creative"].includes(g.dataset.key)) ids=[...ids].sort((a,b)=>galleryHash(a)-galleryHash(b));
 
  const shell=document.createElement("div");shell.className="gallery-shell";
  const rail=document.createElement("div");rail.className="gallery-rail";
